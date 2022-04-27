@@ -46,7 +46,7 @@ app.post('/alumnos', (req, res) => {
 
 app.get('/alumnos/:id', (req, res) => {
     const id = req.params.id;
-    const alumno = alumnos.find(alumno => alumno.id === id);
+    const alumno = alumnos.find(alumno => alumno.id == id);
     if(alumno){
         res.status(200).json(alumno);
     }else{
@@ -59,8 +59,8 @@ app.get('/alumnos/:id', (req, res) => {
 app.put('/alumnos/:id', (req, res) => {
     const id = req.params.id;
     console.log(id);
-    const alumno = alumnos.find(alumno => alumno.id === id);
-    const index = alumnos.findIndex(alumno => alumno.id === id);
+    const alumno = alumnos.find(alumno => alumno.id == id);
+    const index = alumnos.findIndex(alumno => alumno.id == id);
     if(alumno){
         const nuevoAlumno = req.body;
         if(!nuevoAlumno || nuevoAlumno.edad < 0){
@@ -70,7 +70,7 @@ app.put('/alumnos/:id', (req, res) => {
             res.status(500).json({"message": "El semestre del alumno debe ser numérico"});
         }else{
             alumnos[index] = nuevoAlumno;
-            res.status(201).json({"message": "Alumno creado satisfactoriamente con id "+alumno.id});
+            res.status(201).json({"message": "Alumno actualizado satisfactoriamente con id "+alumno.id});
         }
     }else{
         res.status(404).json({
@@ -81,9 +81,9 @@ app.put('/alumnos/:id', (req, res) => {
 
 app.delete('/alumnos/:id', (req, res) => {
     const id = req.params.id;
-    const alumno = alumnos.find(alumno => alumno.id === id);
+    const alumno = alumnos.find(alumno => alumno.id == id);
     if(alumno){
-        alumnos = alumnos.map(alumno => alumno.id !== id);
+        alumnos = alumnos.map(alumno => alumno.id != id);
         res.status(200).json(alumno);
     }else{
         res.status(404).json({
@@ -128,7 +128,7 @@ app.post('/profesores', (req, res) => {
 
 app.get('/profesores/:id', (req, res) => {
     const id = req.params.id;
-    const profesor = profesores.find(profesor => profesor.id === id);
+    const profesor = profesores.find(profesor => profesor.id == id);
     if(profesor){
         res.status(200).json(profesor);
     }else{
@@ -141,8 +141,8 @@ app.get('/profesores/:id', (req, res) => {
 app.put('/profesores/:id', (req, res) => {
     const id = req.params.id;
     console.log(id);
-    const profesor = profesores.find(profesor => profesor.id === id);
-    const index = profesores.findIndex(profesor => profesor.id === id);
+    const profesor = profesores.find(profesor => profesor.id == id);
+    const index = profesores.findIndex(profesor => profesor.id == id);
     if(profesor){
         const nuevoProfesor = req.body;
         if(!nuevoProfesor || nuevoProfesor.edad < 0){
@@ -163,9 +163,9 @@ app.put('/profesores/:id', (req, res) => {
 
 app.delete('/profesor/:id', (req, res) => {
     const id = req.params.id;
-    const profesor = profesores.find(profesor => profesor.id === id);
+    const profesor = profesores.find(profesor => profesor.id == id);
     if(profesor){
-        profesores = profesores.map(profesor => profesor.id !== id);
+        profesores = profesores.map(profesor => profesor.id != id);
         res.status(200).json(profesor);
     }else{
         res.status(404).json({
