@@ -58,19 +58,34 @@ app.get('/alumnos/:id', (req, res) => {
 
 app.put('/alumnos/:id', (req, res) => {
     const id = req.params.id;
-    console.log(id);
     const alumno = alumnos.find(alumno => alumno.id == id);
     const index = alumnos.findIndex(alumno => alumno.id == id);
     if(alumno){
         const nuevoAlumno = req.body;
-        if(!nuevoAlumno || nuevoAlumno.edad < 0){
+        nuevoAlumno.id = id;
+        if(!nuevoAlumno.nombre){
+            res.status(500).json({"message": "El nombre del alumno debe estar llenado"});
+        }
+        else if(!nuevoAlumno.apellido){
+            res.status(500).json({"message": "El apellido del alumno debe estar llenado"});
+        }
+        else if(!nuevoAlumno.edad){
+            res.status(500).json({"message": "La edad del alumno debe estar llenada"});
+        }
+        else if(nuevoAlumno.edad < 0){
             res.status(500).json({"message": "La edad del alumno debe ser numérica"});
         }
-        else if(!nuevoAlumno || nuevoAlumno.semestre < 0){
+        else if(!nuevoAlumno.licenciatura){
+            res.status(500).json({"message": "La licenciatura del alumno debe estar llenada"});
+        }
+        else if(!nuevoAlumno.semestre){
+            res.status(500).json({"message": "El semestre del alumno debe estar llenado"});
+        }
+        else if(nuevoAlumno.semestre < 0){
             res.status(500).json({"message": "El semestre del alumno debe ser numérico"});
         }else{
             alumnos[index] = nuevoAlumno;
-            res.status(201).json({"message": "Alumno actualizado satisfactoriamente con id "+alumno.id});
+            res.status(201).json({"message": "Alumno actualizado satisfactoriamente con id "+id});
         }
     }else{
         res.status(404).json({
@@ -145,14 +160,30 @@ app.put('/profesores/:id', (req, res) => {
     const index = profesores.findIndex(profesor => profesor.id == id);
     if(profesor){
         const nuevoProfesor = req.body;
-        if(!nuevoProfesor || nuevoProfesor.edad < 0){
+        nuevoProfesor.id = id;
+        if(!nuevoProfesor.nombre){
+            res.status(500).json({"message": "El nombre del profesor debe estar llenado"});
+        }
+        else if(!nuevoProfesor.apellido){
+            res.status(500).json({"message": "El apellido del profesor debe estar llenado"});
+        }
+        else if(!nuevoProfesor.edad){
+            res.status(500).json({"message": "La edad del profesor debe estar llenada"});
+        }
+        else if(nuevoProfesor.edad < 0){
             res.status(500).json({"message": "La edad del profesor debe ser numérica"});
         }
-        else if(!nuevoProfesor || nuevoProfesor.semestre < 0){
+        else if(!nuevoProfesor.asignatura){
+            res.status(500).json({"message": "La licenciatura del profesor debe estar llenada"});
+        }
+        else if(!nuevoProfesor.años_servicio){
+            res.status(500).json({"message": "Los años de servicio del profesor debe estar llenados"});
+        }
+        else if(nuevoProfesor.años_servicio < 0){
             res.status(500).json({"message": "Los años de servicio del profesor deben ser numéricos"});
         }else{
             profesores[index] = nuevoProfesor;
-            res.status(201).json({"message": "Profesor creado satisfactoriamente con id "+profesor.id});
+            res.status(201).json({"message": "Profesor actualizado satisfactoriamente con id "+id});
         }
     }else{
         res.status(404).json({
@@ -161,7 +192,7 @@ app.put('/profesores/:id', (req, res) => {
     }
 });
 
-app.delete('/profesor/:id', (req, res) => {
+app.delete('/profesores/:id', (req, res) => {
     const id = req.params.id;
     const profesor = profesores.find(profesor => profesor.id == id);
     if(profesor){
