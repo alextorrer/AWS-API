@@ -32,7 +32,7 @@ app.post('/alumnos', (req, res) => {
     else if(alumno.semestre < 0){
         res.status(400).json({"message": "El promedio del alumno debe ser numérico"});
     }else{
-        alumno.id = alumnos.pop().id + 1;
+        //alumno.id = alumnos.pop().id + 1;
         alumnos.push(alumno);
         res.status(201).json({"message": "Alumno creado satisfactoriamente con id "+alumno.id});
     }
@@ -117,7 +117,7 @@ app.post('/profesores', (req, res) => {
         res.status(400).json({"message": "Las horas de clase del profesor deben ser numéricos"});
     }
     else{
-        profesor.id = profesores.pop().id + 1;
+        //profesor.id = profesores.pop().id + 1;
         profesores.push(profesor);
         res.status(201).json({"message": "Profesor creado satisfactoriamente con id "+profesor.id});
     }
