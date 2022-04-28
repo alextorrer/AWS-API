@@ -18,19 +18,19 @@ app.get('/alumnos', (req, res) => {
 app.post('/alumnos', (req, res) => {
     const alumno = req.body;
     if(!alumno.nombres){
-        res.status(500).json({"message": "El nombre del alumno debe estar llenado"});
+        res.status(400).json({"message": "El nombre del alumno debe estar llenado"});
     }
     else if(!alumno.apellidos){
-        res.status(500).json({"message": "El apellido del alumno debe estar llenado"});
+        res.status(400).json({"message": "El apellido del alumno debe estar llenado"});
     }
     else if(!alumno.matricula){
-        res.status(500).json({"message": "La matrícula del alumno debe estar llenada"});
+        res.status(400).json({"message": "La matrícula del alumno debe estar llenada"});
     }
     else if(!alumno.promedio){
-        res.status(500).json({"message": "El promedio del alumno debe estar llenado"});
+        res.status(400).json({"message": "El promedio del alumno debe estar llenado"});
     }
     else if(alumno.semestre < 0){
-        res.status(500).json({"message": "El promedio del alumno debe ser numérico"});
+        res.status(400).json({"message": "El promedio del alumno debe ser numérico"});
     }else{
         alumno.id = alumnos.pop().id + 1;
         alumnos.push(alumno);
@@ -58,19 +58,19 @@ app.put('/alumnos/:id', (req, res) => {
         const nuevoAlumno = req.body;
         nuevoAlumno.id = id;
         if(!nuevoAlumno.nombres){
-            res.status(500).json({"message": "El nombre del alumno debe estar llenado"});
+            res.status(400).json({"message": "El nombre del alumno debe estar llenado"});
         }
         else if(!nuevoAlumno.apellidos){
-            res.status(500).json({"message": "El apellido del alumno debe estar llenado"});
+            res.status(400).json({"message": "El apellido del alumno debe estar llenado"});
         }
         else if(!nuevoAlumno.matricula){
-            res.status(500).json({"message": "La matrícula del alumno debe estar llenada"});
+            res.status(400).json({"message": "La matrícula del alumno debe estar llenada"});
         }
         else if(!nuevoAlumno.promedio){
-            res.status(500).json({"message": "El promedio del alumno debe estar llenado"});
+            res.status(400).json({"message": "El promedio del alumno debe estar llenado"});
         }
         else if(nuevoAlumno.promedio < 0){
-            res.status(500).json({"message": "El promedio del alumno debe ser numérico"});
+            res.status(400).json({"message": "El promedio del alumno debe ser numérico"});
         }else{
             alumnos[index] = nuevoAlumno;
             res.status(201).json({"message": "Alumno actualizado satisfactoriamente con id "+id});
