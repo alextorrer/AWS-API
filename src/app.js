@@ -73,7 +73,7 @@ app.put('/alumnos/:id', (req, res) => {
             res.status(400).json({"message": "El promedio del alumno debe ser numérico"});
         }else{
             alumnos[index] = nuevoAlumno;
-            res.status(201).json({"message": "Alumno actualizado satisfactoriamente con id "+id});
+            res.status(200).json({"message": "Alumno actualizado satisfactoriamente con id "+id});
         }
     }else{
         res.status(404).json({
@@ -159,7 +159,7 @@ app.put('/profesores/:id', (req, res) => {
             res.status(400).json({"message": "Las horas de clase del profesor deben ser numéricos"});
         }else{
             profesores[index] = nuevoProfesor;
-            res.status(201).json({"message": "Profesor actualizado satisfactoriamente con id "+id});
+            res.status(200).json({"message": "Profesor actualizado satisfactoriamente con id "+id});
         }
     }else{
         res.status(404).json({
