@@ -102,19 +102,19 @@ app.get('/profesores', (req, res) => {
 app.post('/profesores', (req, res) => {
     const profesor = req.body;
     if(!profesor.nombres){
-        res.status(500).json({"message": "El nombre del profesor debe estar llenado"});
+        res.status(400).json({"message": "El nombre del profesor debe estar llenado"});
     }
     else if(!profesor.apellidos){
-        res.status(500).json({"message": "El apellido del profesor debe estar llenado"});
+        res.status(400).json({"message": "El apellido del profesor debe estar llenado"});
     }
     else if(!profesor.numeroEmpleado){
-        res.status(500).json({"message": "El numero de empleado del profesor debe estar llenada"});
+        res.status(400).json({"message": "El numero de empleado del profesor debe estar llenada"});
     }
     else if(!profesor.horasClase){
-        res.status(500).json({"message": "Las horas de clase del profesor debe estar llenados"});
+        res.status(400).json({"message": "Las horas de clase del profesor debe estar llenados"});
     }
     else if(profesor.horasClase < 0){
-        res.status(500).json({"message": "Las horas de clase del profesor deben ser numéricos"});
+        res.status(400).json({"message": "Las horas de clase del profesor deben ser numéricos"});
     }
     else{
         profesor.id = profesores.pop().id + 1;
@@ -144,19 +144,19 @@ app.put('/profesores/:id', (req, res) => {
         const nuevoProfesor = req.body;
         nuevoProfesor.id = id;
         if(!nuevoProfesor.nombres){
-            res.status(500).json({"message": "El nombre del profesor debe estar llenado"});
+            res.status(400).json({"message": "El nombre del profesor debe estar llenado"});
         }
         else if(!nuevoProfesor.apellidos){
-            res.status(500).json({"message": "El apellido del profesor debe estar llenado"});
+            res.status(400).json({"message": "El apellido del profesor debe estar llenado"});
         }
         else if(!nuevoProfesor.numeroEmpleado){
-            res.status(500).json({"message": "El numero de empleado del profesor debe estar llenada"});
+            res.status(400).json({"message": "El numero de empleado del profesor debe estar llenada"});
         }
         else if(!nuevoProfesor.horasClase){
-            res.status(500).json({"message": "Las horas de clase del profesor debe estar llenados"});
+            res.status(400).json({"message": "Las horas de clase del profesor debe estar llenados"});
         }
         else if(nuevoProfesor.horasClase < 0){
-            res.status(500).json({"message": "Las horas de clase del profesor deben ser numéricos"});
+            res.status(400).json({"message": "Las horas de clase del profesor deben ser numéricos"});
         }else{
             profesores[index] = nuevoProfesor;
             res.status(201).json({"message": "Profesor actualizado satisfactoriamente con id "+id});
