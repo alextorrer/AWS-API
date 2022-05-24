@@ -95,7 +95,12 @@ app.get('/alumnos/:id', async(req, res) => {
     }else{
         try{
             const response = await alumnos.get(id);
-            res.status(200).json(response[0]);
+            if(response.affectedRows == 1){
+                res.status(200).json(response[0]);
+            }else{
+                res.status(404).json("No se encontró al alumno")
+            }
+            
         }
         catch(err){
             console.error('Error al obtener alumno', err.message);
@@ -134,7 +139,7 @@ app.put('/alumnos/:id', async (req, res) => {
             if(resultado.affectedRows == 1){
                 res.status(200).json(nuevoAlumno[0]);
             }else{
-                res.status(200).json('No se encontró el alumno con id '+id);
+                res.status(404).json('No se encontró el alumno con id '+id);
             }
         }
         catch(err){
@@ -154,7 +159,7 @@ app.delete('/alumnos/:id', async (req, res) => {
             if(resultado.affectedRows == 1){
                 res.status(200).json('Se ha eliminado el alumno');
             }else{
-                res.status(200).json('No se encontró el alumno con id '+id);
+                res.status(404).json('No se encontró el alumno con id '+id);
             }
         }
         catch(err){
@@ -213,7 +218,12 @@ app.get('/profesores/:id', async(req, res) => {
         res.status(400).json({"message": "El id debe ser numérico"});
     }else{
         try{
-            res.status(200).json(await profesores.get(id));
+            const response = await profesores.get(id);
+            if(response.affectedRows == 1){
+                res.status(200).json(response[0]);
+            }else{
+                res.status(404).json('No se encontró el profesor con id '+id);
+            }
         }
         catch(err){
             console.error('Error al obtener profesor', err.message);
@@ -251,7 +261,7 @@ app.put('/profesores/:id', async (req, res) => {
             if(resultado.affectedRows == 1){
                 res.status(200).json(nuevoProfesor[0]);
             }else{
-                res.status(200).json('No se encontró el profesor con id '+id);
+                res.status(404).json('No se encontró el profesor con id '+id);
             }
         }
         catch(err){
