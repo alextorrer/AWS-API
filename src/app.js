@@ -96,7 +96,7 @@ app.get('/alumnos/:id', async(req, res) => {
     }else{
         try{
             const response = await alumnos.get(id);
-            if(length(response) > 0){
+            if(response.length > 0){
                 res.status(200).json(response[0]);
             }else{
                 res.status(404).json("No se encontró al alumno")
@@ -220,7 +220,7 @@ app.get('/profesores/:id', async(req, res) => {
     }else{
         try{
             const response = await profesores.get(id);
-            if(length(response) > 0){
+            if(response.length > 0){
                 res.status(200).json(response[0]);
             }else{
                 res.status(404).json('No se encontró el profesor con id '+id);
