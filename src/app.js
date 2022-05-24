@@ -168,7 +168,7 @@ app.delete('/alumnos/:id', async (req, res) => {
             res.status(500);
         }
     }
-});
+}).all((req, res) => res.status(405).send());
 
 app.get('/profesores', async (req, res) => {
     try{
@@ -290,6 +290,6 @@ app.delete('/profesores/:id', async (req, res) => {
             res.status(500);
         }
     }
-});
+}).all((req, res) => res.status(405).send());
 
 app.listen(8080, () => console.log('Listening on port 8080'));
