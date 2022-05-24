@@ -76,10 +76,11 @@ app.post('/alumnos/:id/fotoPerfil', upload.array('foto', 1), async (req, res) =>
     alumno.fotoPerfil = req.files;
     try{
         const resultado = await alumnos.savePhoto(alumno);
+        const nuevoAlumno = await alumnos.get(alumno.id)
         if(resultado.affectedRows == 1){
-            res.status(200).json('Se ha insertado la foto del alumno: '+alumno.fotoPerfil[0].location);
+            res.status(200).json(nuevoAlumno[0]);
         }else{
-            res.status(200).json('No se encontró el alumno con id '+id);
+            res.status(404).json('No se encontró el alumno con id '+alumno.id);
         }
     }
     catch(err){
@@ -95,7 +96,7 @@ app.get('/alumnos/:id', async(req, res) => {
     }else{
         try{
             const response = await alumnos.get(id);
-            if(response.affectedRows == 1){
+            if(length(response) > 0){
                 res.status(200).json(response[0]);
             }else{
                 res.status(404).json("No se encontró al alumno")
@@ -136,7 +137,7 @@ app.put('/alumnos/:id', async (req, res) => {
         try{
             const resultado = await alumnos.update(alumno);
             const nuevoAlumno = await alumnos.get(id);
-            if(resultado.affectedRows == 1){
+            if(resultado.affectedRows > 0){
                 res.status(200).json(nuevoAlumno[0]);
             }else{
                 res.status(404).json('No se encontró el alumno con id '+id);
@@ -219,7 +220,7 @@ app.get('/profesores/:id', async(req, res) => {
     }else{
         try{
             const response = await profesores.get(id);
-            if(response.affectedRows == 1){
+            if(length(response) > 0){
                 res.status(200).json(response[0]);
             }else{
                 res.status(404).json('No se encontró el profesor con id '+id);
@@ -258,7 +259,7 @@ app.put('/profesores/:id', async (req, res) => {
         try{
             const resultado = await profesores.update(profesor);
             const nuevoProfesor = await profesores.get(id);
-            if(resultado.affectedRows == 1){
+            if(resultado.affectedRows > 0){
                 res.status(200).json(nuevoProfesor[0]);
             }else{
                 res.status(404).json('No se encontró el profesor con id '+id);
