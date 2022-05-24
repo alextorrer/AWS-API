@@ -17,7 +17,7 @@ async function save(alumno){
 
 async function get(id){
     const rows = await db.query(
-        `SELECT id, nombres, apellidos, matricula, promedio FROM alumnos WHERE (id = ${id})`
+        `SELECT id, nombres, apellidos, matricula, promedio, fotoPerfilUrl FROM alumnos WHERE (id = ${id})`
     );
     return rows;
 }
