@@ -61,7 +61,7 @@ app.post('/alumnos', async (req, res) => {
     else{
         try{
             const resultado = await alumnos.save(alumno);
-            res.status(201).json('Se ha insertado el alumno con id: '+resultado.insertId);
+            res.status(201).json({id: resultado.insertId});
         }
         catch(err){
             console.error('Error al insertar alumno', err.message);
@@ -196,7 +196,7 @@ app.post('/profesores', async (req, res) => {
     else{
         try{
             const resultado = await profesores.save(profesor);
-            res.status(201).json('Se ha insertado el profesor con id: '+resultado.insertId);
+            res.status(201).json({id: resultado.insertId});
         }
         catch(err){
             console.error('Error al insertar profesor', err.message);
