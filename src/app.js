@@ -94,7 +94,8 @@ app.get('/alumnos/:id', async(req, res) => {
         res.status(400).json({"message": "El id debe ser numérico"});
     }else{
         try{
-            res.status(200).json(await alumnos.get(id));
+            const response = await alumnos.get(id);
+            res.status(200).json(response[0]);
         }
         catch(err){
             console.error('Error al obtener alumno', err.message);
@@ -129,8 +130,9 @@ app.put('/alumnos/:id', async (req, res) => {
     else{
         try{
             const resultado = await alumnos.update(alumno);
+            const nuevoAlumno = await alumnos.get(id);
             if(resultado.affectedRows == 1){
-                res.status(200).json('Se ha actualizado el alumno');
+                res.status(200).json(nuevoAlumno[0]);
             }else{
                 res.status(200).json('No se encontró el alumno con id '+id);
             }
@@ -245,8 +247,9 @@ app.put('/profesores/:id', async (req, res) => {
     else{
         try{
             const resultado = await profesores.update(profesor);
+            const nuevoProfesor = await profesores.get(id);
             if(resultado.affectedRows == 1){
-                res.status(200).json('Se ha actualizado el profesor');
+                res.status(200).json(nuevoProfesor[0]);
             }else{
                 res.status(200).json('No se encontró el profesor con id '+id);
             }
@@ -268,7 +271,7 @@ app.delete('/profesores/:id', async (req, res) => {
             if(resultado.affectedRows == 1){
                 res.status(200).json('Se ha eliminado el profesor');
             }else{
-                res.status(200).json('No se encontró el profesor con id '+id);
+                res.status(404).json('No se encontró el profesor con id '+id);
             }
         }
         catch(err){
