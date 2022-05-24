@@ -1,13 +1,34 @@
-const { json } = require('express');
+require('dotenv').config();
 const express = require('express');
+const aws = require('aws-sdk');
+const bodyParser = require('body-parser');
+const multer = require('multer');
+const multerS3 = require('multer-s3')
 const util = require('./util');
+const config = require('../config');
 const alumnos = require('./data/alumnos');
 const profesores = require('./data/profesores');
+
 const app = express();
+const s3 = new aws.S3();
 
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(bodyParser.json());
 
+const upload = multer({
+    storage: multerS3({
+        s3: s3,
+        acl: 'public-read',
+        bucket: 'aws-api-img-bucket',
+        key: function(req, file, cb){
+            console.log(file);
+            cb(null, file.originalname);
+        }
+    })
+})
+
+/**********ROUTES**********/
 app.get('/', (req, res) => {
     res.send('Welcome to the AWS REST API');
 });
@@ -46,6 +67,24 @@ app.post('/alumnos', async (req, res) => {
             console.error('Error al insertar alumno', err.message);
             res.status(500);
         }
+    }
+});
+
+app.post('/alumnos/:id/fotoPerfil', upload.array('image', 1), async (req, res) => {
+    const alumno = req.body;
+    alumno.id = req.params.id;
+    alumno.fotoPerfil = req.files;
+    try{
+        const resultado = await alumnos.savePhoto(alumno);
+        if(resultado.affectedRows == 1){
+            res.status(200).json('Se ha insertado la foto del alumno: '+alumno.fotoPerfil[0].location);
+        }else{
+            res.status(200).json('No se encontró el alumno con id '+id);
+        }
+    }
+    catch(err){
+        console.error('Error al insertar alumno', err.message);
+        res.status(500);
     }
 });
 

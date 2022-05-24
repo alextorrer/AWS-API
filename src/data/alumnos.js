@@ -2,7 +2,7 @@ const db = require('./db');
 
 async function getAll(){
     const rows = await db.query(
-        `SELECT id, nombres, apellidos, matricula, promedio FROM alumnos`
+        `SELECT id, nombres, apellidos, matricula, promedio, fotoPerfilUrl FROM alumnos`
     );
 
     return rows;
@@ -36,10 +36,18 @@ async function remove(id){
     return rows;
 }
 
+async function savePhoto(alumno){
+    const rows = await db.query(
+        `UPDATE alumnos SET fotoPerfilUrl = '${alumno.fotoPerfil[0].location}' WHERE (id = ${alumno.id})`
+    );
+    return rows;
+}
+
 module.exports = {
     getAll,
     save,
     get,
     update,
-    remove
+    remove,
+    savePhoto
 }
