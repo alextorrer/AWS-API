@@ -70,7 +70,7 @@ app.post('/alumnos', async (req, res) => {
     }
 });
 
-app.post('/alumnos/:id/fotoPerfil', upload.array('image', 1), async (req, res) => {
+app.post('/alumnos/:id/fotoPerfil', upload.array('foto', 1), async (req, res) => {
     const alumno = req.body;
     alumno.id = req.params.id;
     alumno.fotoPerfil = req.files;
