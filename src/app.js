@@ -198,9 +198,6 @@ app.post('/profesores', async (req, res) => {
     else if(!profesor.horasClase){
         res.status(400).json({"message": "El promedio del profesor debe estar llenado"});
     }
-    else if(!util.isFloat(profesor.horasClase)){
-        res.status(400).json({"message": "Las horas de clase deben ser numéricas"});
-    }
     else{
         try{
             const resultado = await profesores.save(profesor);
